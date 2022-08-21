@@ -1,8 +1,13 @@
-import { useContext } from "react";
+import React,{ useContext } from "react";
+import { CartProduct } from "../CustomTypes";
 import { CartContext } from "../util/context";
 import "./index.css";
 
-const CartItem = (props) => {
+type CartItemProps = {
+  product: CartProduct;
+};
+
+const CartItem = (props: CartItemProps) => {
   const {
     product: { item, quantity },
   } = props;

@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Product from "../../components/Product";
+import { Product as ProductType } from "../../CustomTypes";
 import { CartContext } from "../../util/context";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiFilterAlt } from "react-icons/bi";
@@ -10,16 +11,17 @@ import "./index.css";
 const PriceRanges = ["<=250", "251-499", ">=500"];
 
 const Products = () => {
-  const [items, setItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
+  const [items, setItems] = useState<ProductType[]>([]);
+  const [filteredItems, setFilteredItems] = useState<ProductType[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [genderFilter, setGenderFilter] = useState([]);
-  const [colorFilter, setColorFilter] = useState([]);
-  const [priceFilter, setPriceFilter] = useState([]);
-  const [typeFilter, setTypeFilter] = useState([]);
+  const [genderFilter, setGenderFilter] = useState<string[]>([]);
+  const [colorFilter, setColorFilter] = useState<string[]>([]);
+  const [priceFilter, setPriceFilter] = useState<string[]>([]);
+  const [typeFilter, setTypeFilter] = useState<string[]>([]);
   const setCart = useContext(CartContext)[1];
-  function onlyUnique(value, index, self) {
+
+  function onlyUnique(value:any, index:number, self:any[]): boolean {
     return self.indexOf(value) === index;
   }
 
@@ -29,24 +31,29 @@ const Products = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        setItems(data);
+        setItems(data as ProductType[]);
       });
   }, []);
+
   useEffect(() => {
     let newItems = items;
+
     if (genderFilter.length > 0) {
       newItems = newItems.filter(
         (item) => genderFilter.indexOf(item.gender) >= 0
       );
     }
+
     if (colorFilter.length > 0) {
       newItems = newItems.filter(
         (item) => colorFilter.indexOf(item.color) >= 0
       );
     }
+
     if (typeFilter.length > 0) {
       newItems = newItems.filter((item) => typeFilter.indexOf(item.type) >= 0);
     }
+
     if (priceFilter.length > 0) {
       newItems = newItems.filter((item) => {
         return priceFilter.some((filter) => {
@@ -62,6 +69,7 @@ const Products = () => {
         });
       });
     }
+
     if (searchText !== "") {
       const searchTerms = searchText.trim().split(/\s+/);
       newItems = newItems.filter((item) => {
@@ -74,6 +82,7 @@ const Products = () => {
         return searchTerms.some((term) => str.search(term.toLowerCase()) > -1);
       });
     }
+
     setFilteredItems(newItems);
   }, [items, searchText, genderFilter, colorFilter, typeFilter, priceFilter]);
 
@@ -88,34 +97,36 @@ const Products = () => {
         <div className="Products">
           {showFilters && (
             <div className="Sidebar">
-              <h2>Filters</h2>
-              <div className="Checklist-container">
-                <CheckList
-                  title="Gender"
-                  checklist={items
-                    .map((item) => item.gender)
-                    .filter(onlyUnique)}
-                  selectedList={genderFilter}
-                  setSelectedList={setGenderFilter}
-                />
-                <CheckList
-                  title="Color"
-                  checklist={items.map((item) => item.color).filter(onlyUnique)}
-                  selectedList={colorFilter}
-                  setSelectedList={setColorFilter}
-                />
-                <CheckList
-                  title="Price Range"
-                  checklist={PriceRanges}
-                  selectedList={priceFilter}
-                  setSelectedList={setPriceFilter}
-                />
-                <CheckList
-                  title="Type"
-                  checklist={items.map((item) => item.type).filter(onlyUnique)}
-                  selectedList={typeFilter}
-                  setSelectedList={setTypeFilter}
-                />
+              <div className="Filter-container">
+                <h2>Filters</h2>
+                <div className="Checklist-container">
+                  <CheckList
+                    title="Gender"
+                    checklist={items
+                      .map((item) => item.gender)
+                      .filter(onlyUnique)}
+                    selectedList={genderFilter}
+                    setSelectedList={setGenderFilter}
+                  />
+                  <CheckList
+                    title="Color"
+                    checklist={items.map((item) => item.color).filter(onlyUnique)}
+                    selectedList={colorFilter}
+                    setSelectedList={setColorFilter}
+                  />
+                  <CheckList
+                    title="Price Range"
+                    checklist={PriceRanges}
+                    selectedList={priceFilter}
+                    setSelectedList={setPriceFilter}
+                  />
+                  <CheckList
+                    title="Type"
+                    checklist={items.map((item) => item.type).filter(onlyUnique)}
+                    selectedList={typeFilter}
+                    setSelectedList={setTypeFilter}
+                  />
+                </div>
               </div>
             </div>
           )}

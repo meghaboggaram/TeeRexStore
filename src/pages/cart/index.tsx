@@ -1,4 +1,4 @@
-import { useCallback, useContext } from "react";
+import React,{ useCallback, useContext } from "react";
 import CartItem from "../../components/CartItem";
 import { CartContext } from "../../util/context";
 import "./index.css";
@@ -6,7 +6,7 @@ import "./index.css";
 const Cart = () => {
   const cart = useContext(CartContext)[0];
 
-  const computeTotal = useCallback(() => {
+  const computeTotal = useCallback(():number => {
     let sum = 0;
     cart.forEach((product) => (sum += product.item.price * product.quantity));
     return sum;

@@ -1,6 +1,15 @@
-const CheckList = (props) => {
+import React, { ChangeEvent } from "react";
+
+type CheckListProps = {
+  title:string;
+  checklist:string[];
+  selectedList:string[];
+  setSelectedList:(val:string[])=>void;
+};
+
+const CheckList = (props:CheckListProps) => {
   const { title, checklist, selectedList, setSelectedList } = props;
-  const handleCheck = (event) => {
+  const handleCheck = (event:ChangeEvent<HTMLInputElement>) => {
     var updatedList = [...selectedList];
     if (event.target.checked) {
       updatedList = [...selectedList, event.target.value];

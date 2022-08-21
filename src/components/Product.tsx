@@ -1,7 +1,15 @@
-import { useContext, useState } from "react";
+import React,{ useContext, useState } from "react";
 import { CartContext } from "../util/context";
 
-const Product = (props) => {
+type ProductProps = {
+  id:number;
+  name: string;
+  img:string;
+  price:number;
+  onAdd: ()=>void;
+};
+
+const Product = (props:ProductProps) => {
   const cart = useContext(CartContext)[0];
   const [addedToCart, setAddedToCart] = useState(
     cart.findIndex((val) => val.item.id === props.id) >= 0

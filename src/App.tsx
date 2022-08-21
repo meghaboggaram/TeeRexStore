@@ -1,3 +1,4 @@
+import React from 'react';
 import "./App.css";
 import Home from "./pages/home";
 import { Routes, Route, Link } from "react-router-dom";
@@ -6,9 +7,10 @@ import Cart from "./pages/cart";
 import { useState } from "react";
 import { CartContext } from "./util/context";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { CartProduct } from './CustomTypes';
 
-function App() {
-  const defaultCart = useState([]);
+function App(): React.ReactElement {
+  const defaultCart = useState<CartProduct[]>([]);
   return (
     <div className="App">
       <CartContext.Provider value={defaultCart}>
