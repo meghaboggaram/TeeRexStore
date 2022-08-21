@@ -1,0 +1,31 @@
+.Cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+}
+.Cartitem-img {
+    flex:1
+}
+.Cartitem-name-price { flex: 1 }
+.Cartitem-quantity {
+    flex: 2;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center
+}
+.List-title { 
+    text-align: left
+}
+.List-container {
+    margin-top: -15px
+}
+.List-item {
+    display: flex;
+    justify-content: flex-start
+}
+.Product-container { 
+    border-radius:5px;
+    display:inline-block;
+    box-shadow:2px 2px grey
+}

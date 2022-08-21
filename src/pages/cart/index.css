@@ -1,0 +1,8 @@
+.Cart-list {
+    width:50%
+}
+@media only screen and (max-width:600px) {
+    .Cart-list {
+        width:100%
+    }
+}
